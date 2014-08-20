@@ -1,0 +1,25 @@
+<div>
+    <div>
+    <img ng-repeat='card in enemyCards' ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+    </div>
+    <div style="height:200px;width:200px">
+            <div style="height:100px;width:400px">
+            <img ng-repeat='card in enemyPlayedCards' ng-class="{{card}}" ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+            </div>
+            <div style="height:100px;width:400px">
+            <img ng-repeat='card in yourPlayedCards' ng-class="{{card}}" ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+            </div>
+    </div>
+
+    <div>
+    <img ng-repeat='card in yourCards' ng-class="{choose:card.ifChoose}"  ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+    </div>
+    <div>
+    <button id="start" ng-click="play()">
+      出牌
+    </button>
+    <button id="doNotHave" ng-click="doNotHave()">
+      不要了
+    </button>
+    </div>
+</div>
