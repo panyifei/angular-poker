@@ -4,3 +4,13 @@
 
 ##规则说明
 与电脑对战,谁先出完谁获胜,目前支持单张,对子,3张,炸弹.
+
+##效果显示
+游戏开始
+<img alt="游戏开始" src="picture/features/effect0.png" />
+
+游戏进行中
+<img alt="游戏进行中" src="picture/features/effect1.png" />
+
+游戏结束
+<img alt="游戏结束" src="picture/features/effect2.png" />
