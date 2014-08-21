@@ -1,0 +1,86 @@
+/*ready界面*/
+.gameName{
+    margin-top:100px;
+    text-align: center;
+}
+.firstStart{
+    margin-top:180px;
+    margin-left:300px;
+    padding:20px;
+}
+
+
+
+
+/*游戏界面*/
+.container{
+    width:750px;
+    height:580px;
+    border:2px solid;
+    border-radius:5px;
+}
+
+.eCards{
+    height:180px;
+    width:700px;
+    margin-right:34px;
+    margin-left:auto;
+}
+.fPlace{
+    height:220px;
+    width:700px;
+    margin-right:auto;
+    margin-left:auto;
+}
+.textArea{
+    float:left;
+    height:220px;
+    width:220px;
+}
+.ePlayedCards{
+    height:100px;
+    width:150px;
+    margin-right:auto;
+    margin-left:auto;
+    border:2px solid;
+    border-radius:5px;
+}
+.yPlayedCards{
+    height:100px;
+    width:150px;
+    margin-right:auto;
+    margin-left:auto;
+    border:2px solid;
+    border-radius:5px;
+}
+
+
+/*你的牌*/
+.yCards{
+    clear:both;
+    position: relative;
+    height:180px;
+    width:700px;
+    margin-right:34px;
+    margin-left:auto;
+}
+.mButton{
+    position: absolute;
+    right:0px;
+    bottom:10px;
+}
+
+.choose{
+    margin-top:-30px;
+}
+
+/*图片*/
+img{
+    margin-right:-30px;
+    width:60px;
+}
+
+/*人物图片*/
+.statusPicture{
+    width:150px;
+}

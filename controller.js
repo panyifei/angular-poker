@@ -62,7 +62,21 @@ function StartGameController($scope){
     $scope.enemyPlayedCards = [];
     $scope.yourPlayedCards = [];
     $scope.ifCasual=true;//是否随便出
+    $scope.youText=["你好"];
+    $scope.enemyPicture="enemyStart.jpg";
+    $scope.youBoom=false;
+    var ss=$scope.youText;
+    $scope.enemyText=["Enemy:你也好"];
+    $scope.youPicture="youStart.jpg";
+    $scope.ifGameOver=false;
 
+    function youLose(){
+        $scope.youText=["呜呜~~"];
+        $scope.enemyPicture="enemyWin.jpg";
+        $scope.enemyText=["Enemy:你输了"];
+        $scope.youPicture="youLose.jpg";
+        document.getElementById("doNotHave").disabled=true;
+    }//你输了
 
     $scope.enemyPlay=function(){
         $scope.enemyPlayedCards=[];
@@ -71,7 +85,8 @@ function StartGameController($scope){
         var tempArr= valueArr.filter(function(x){ return x[0]>$scope.yourPlayedCards[0].value&&x[1]==yourPCCount});
         console.log(tempArr);
         if(tempArr[0]!=undefined){//如果找到了可以压的，出最小的
-            console.log("enemy:有大你的哈哈");
+            $scope.enemyText[0]="Enemy:大你！";
+            $scope.enemyPicture="enemyBig.jpg";//改变图片
             var value=tempArr[0][0];
             console.log(value);
             for(var i=0;i<$scope.enemyCards.length;i++){
@@ -83,12 +98,13 @@ function StartGameController($scope){
             //从牌堆中删去.
             enemyPlayEnd();
             if($scope.enemyCards.length==0){
-            alert("我勒个去,**啊,这都输???");
+                 youLose();
             }
         }else{
             var boomArr= valueArr.filter(function(x){ return x[1]==4&&yourPCCount!=4});
             if(boomArr[0]!=undefined){
-                console.log("enemy:炸死你!!哈哈");
+                $scope.enemyText[0]="Enemy:炸死你!!哈哈";
+                $scope.enemyPicture="boom.gif";//改变图片
                 var value=boomArr[0][0];
                 console.log(value);
                 for(var i=0;i<$scope.enemyCards.length;i++){
@@ -100,10 +116,11 @@ function StartGameController($scope){
                 //从牌堆中删去.
                 enemyPlayEnd();
                 if($scope.enemyCards.length==0){
-                alert("我勒个去,**啊,这都输???");
+                     youLose();
                 }
             }else{
-                console.log("enemy:老子不要了");
+                $scope.enemyPicture="enemyDoNot.jpg";//改变图片
+                $scope.enemyText[0]="Enemy:小哥我不要了";
                 $scope.ifCasual=true;//让我随便出
                 $scope.ifYourTurn=true;
                 $scope.ifEnemyTurn=false;
@@ -124,11 +141,27 @@ function StartGameController($scope){
         removeChoose($scope.yourCards);
         $scope.ifYourTurn=false;
         $scope.ifEnemyTurn=true;
+        console.log($scope.youBoom);
+        if($scope.youBoom){
+            $scope.youPicture="boom.gif";//改变图片
+            $scope.youText=["炸弹!"];
+            $scope.youBoom=false;
+        }else{
+            $scope.youPicture="youBig.jpg";//改变图片
+        }
+
+
         document.getElementById("start").disabled=true;
         if($scope.yourCards.length==0){
-            alert("你 印了");
+            $scope.youText=["哈哈,So easy~真象只有一个!"];
+            $scope.enemyText=["Enemy:你赢了"];
+            $scope.enemyPicture="enemyLose.jpg";
+            $scope.youPicture="youWin.jpg";
+            $scope.ifGameOver=true;
         }
-        $scope.enemyPlay();
+        if(!$scope.ifGameOver){
+            $scope.enemyPlay();
+        }
     };//你出一次牌
 
     function removeChoose(yourCards){
@@ -147,12 +180,14 @@ function StartGameController($scope){
         $scope.ifYourTurn=false;
         $scope.ifEnemyTurn=true;
         $scope.ifCasual=true;//对面随便出牌
+        $scope.youText=["要不起"];
+        $scope.youPicture="youDoNot.jpg";//改变图片
         enemyJustPlay();
     };//你没牌可出
 
 
     $scope.changeState=function(row){
-        console.log("点什么点");
+
         $scope.yourCards[row].ifChoose=!$scope.yourCards[row].ifChoose;
         //先得到选中的牌
         var readyCards=[];
@@ -162,16 +197,17 @@ function StartGameController($scope){
             }
         }//你选择好的牌
         if($scope.ifCasual){//如果对手不要,我随便出
-            console.log("随便出啊");
+
             if(checkJustPlay(readyCards)){
-                console.log("可以这么出");
+                $scope.youText[0]="可以这么出";
                 document.getElementById("start").disabled=false;
             }else{
-                console.log("不可以这么出");
+                $scope.youText[0]="不可以这么出";
                 document.getElementById("start").disabled=true;
             }
         }else{
             if($scope.ifYourTurn==true&&$scope.ifEnemyTurn==false&&compare(readyCards,$scope.enemyPlayedCards)){
+                $scope.youText=["管上！"];
                 document.getElementById("start").disabled=false;
             }else{
                 document.getElementById("start").disabled=true;
@@ -180,12 +216,16 @@ function StartGameController($scope){
 
     }//点击某张牌修改状态,顺便比较看是否可以出
 
+    $scope.refresh=function(){
+        location.reload();
+    }
+
     function enemyJustPlay(){
         $scope.yourPlayedCards=[];
         $scope.enemyPlayedCards=[];
         enemyChoosePay();
         if($scope.enemyCards.length==0){
-            alert("我勒个去,**啊,这都输???");
+            youLose();
         }
         $scope.ifYourTurn=true;
         $scope.ifEnemyTurn=false;
@@ -195,7 +235,6 @@ function StartGameController($scope){
 
     function enemyChoosePay(){
         if($scope.enemyCards.length==0){
-            alert("我勒个去,**啊,这都输???");
         }else{
             var valueArr=getCardValue();
             console.log(valueArr);
@@ -286,7 +325,8 @@ function StartGameController($scope){
                 var value = readyCards[0].value;
                 var ifBoob = readyCards.every(function(x){ return x.value===value});
                 if(ifBoob){//如果是炸子的话,就大
-                    console.log("是个炸子");
+                    $scope.youBoom=true;
+                    $scope.youText[0]="炸死他!!";
                     return true;
                 }
             }
@@ -317,7 +357,7 @@ function StartGameController($scope){
                 break;
             case 4:
                 if(readyCards[0].value==readyCards[1].value&&readyCards[0].value==readyCards[2].value&&readyCards[0].value==readyCards[3].value&&readyCards[0].value>playedCards[0].value){
-                    console.log("炸子比你大");
+                    $scope.youText[0]="炸子比他大,不虚";
                     return true;
                 }else{
                     return false;
@@ -327,6 +367,7 @@ function StartGameController($scope){
         }
         return false;
     }//比较是否比人家的牌大,前一个为候选牌组
+
 
     //初始化各个方法结束
     //机器人先出牌,设置为你的牌回合

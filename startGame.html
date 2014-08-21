@@ -1,25 +1,45 @@
-<div>
-    <div>
-    <img ng-repeat='card in enemyCards' ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+<div class="container" style="background:url(picture/features/gameBackground.jpg) no-repeat ">
+
+    <div class="eCards">
+        <img ng-repeat='card in enemyCards' ng-src="picture/1.jpg">
     </div>
-    <div style="height:200px;width:200px">
-            <div style="height:100px;width:400px">
-            <img ng-repeat='card in enemyPlayedCards' ng-class="{{card}}" ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+    
+    <div class="fPlace">
+        <div class="textArea">
+            <div>
+            <span style="color:#FFF">{{enemyText[0]}}</span>
             </div>
-            <div style="height:100px;width:400px">
-            <img ng-repeat='card in yourPlayedCards' ng-class="{{card}}" ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+            <div>
+            <img class="statusPicture" ng-src="picture/features/{{enemyPicture}}">
             </div>
+        </div>
+        <div class="textArea">
+            <div class="ePlayedCards">
+                 <img ng-repeat='card in enemyPlayedCards' ng-class="{{card}}" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+            </div>
+
+            <div class="yPlayedCards">
+                 <img ng-repeat='card in yourPlayedCards' ng-class="{{card}}"  ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+            </div>
+        </div>
+        <div class="textArea">
+            <div>
+            <span style="color:#FFF">{{youText[0]}}</span>
+            </div>
+            <div>
+            <img class="statusPicture" ng-src="picture/features/{{youPicture}}">
+            </div>
+        </div>
     </div>
 
-    <div>
-    <img ng-repeat='card in yourCards' ng-class="{choose:card.ifChoose}"  ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+    <div class="yCards">
+        <img ng-repeat='card in yourCards' ng-class="{choose:card.ifChoose}"  ng-click="changeState($index)" ng-src="picture/{{card.suit}}{{card.value}}.jpg">
+        <div class="mButton">
+        <button id="start" class="btn btn-success" ng-click="play()">出牌</button>
+        <button id="doNotHave" class="btn btn-info" ng-click="doNotHave()">不要了</button>
+        <button  class="btn btn-danger" ng-click="refresh()">重新开始</button>
+        </div>
     </div>
-    <div>
-    <button id="start" ng-click="play()">
-      出牌
-    </button>
-    <button id="doNotHave" ng-click="doNotHave()">
-      不要了
-    </button>
-    </div>
+
+
 </div>
